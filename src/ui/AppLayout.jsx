@@ -3,7 +3,7 @@ import Navbar from "../features/Navbar/Navbar";
 
 export default function AppLayout() {
   return (
-    <div>
+    <div className="container">
       <Navbar />
       <Outlet />
     </div>

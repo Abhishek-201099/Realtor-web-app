@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  line-height: 1;
+  font-size: 1.6rem;
+  color: var(--color-title);
+}
+
+.container {
+  max-width: 1536px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
+/* NAVBAR */
+
+.navbar {
+  padding: 1rem 0rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo-container {
+  width: 20%;
+  cursor: pointer;
+}
+
+.nav-logo {
+  height: 4rem;
+}
+
+.nav-list {
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+  gap: 8rem;
+}
+
+.nav-list-item a {
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #000;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.nav-list-item a.active {
+  color: red;
+}
+
+.nav-list-item a:hover {
+  color: red;
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
+/* RESPONSIVE */
+/* 2xl */
+@media (max-width: 1536px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* xl */
+@media (max-width: 1280px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+/* lg */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+/* md */
+@media (max-width: 768px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+/* sm */
+@media (max-width: 640px) {
+  .container {
+    max-width: 475px;
+  }
+}
+
+/* xs */
+@media (max-width: 475px) {
+  .container {
+    width: 100%;
+  }
+}
