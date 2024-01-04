@@ -13,6 +13,7 @@
 
 html {
   font-size: 62.5%;
+  overflow-y: hidden;
 }
 
 body {
@@ -26,6 +27,10 @@ body {
   max-width: 1536px;
   margin-left: auto;
   margin-right: auto;
+  height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
 }
 
 /***************************************************/
@@ -73,6 +78,165 @@ body {
 
 .nav-list-item a:hover {
   color: red;
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
+/* SIGN-IN FORM */
+.section-signin {
+  flex: 1;
+  min-height: 60rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin-container {
+  background-color: #fff;
+  padding: 2rem;
+  max-height: 100rem;
+  width: 40%;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.signin-name-field,
+.signin-password-field,
+.signin-input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signin-name-field label,
+.signin-password-field label,
+.signin-input-field label {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.signin-name-field input,
+.signin-password-field input,
+.signin-input-field input {
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  font-size: 1.8rem;
+  width: 100%;
+}
+
+.signin-name-field input::placeholder,
+.signin-password-field input::placeholder,
+.signin-input-field input::placeholder {
+  color: #ccc;
+}
+
+.signin-passowrd-input-container {
+  position: relative;
+}
+
+.signin-password-field svg {
+  position: absolute;
+  top: 1rem;
+  right: 1.3rem;
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+}
+
+.signin-register {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-register p,
+.signin-register a {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.signin-register p a,
+.signin-register a {
+  text-decoration: none;
+  color: #888;
+  transition: all 0.3s;
+}
+
+.signin-register p a:hover,
+.signin-register a:hover {
+  color: red;
+}
+
+.signin-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.signin-buttons button {
+  padding: 1.2rem 2rem;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.signin-buttons button:first-child {
+  background-color: #4f46e5;
+}
+
+.signin-buttons button:first-child:hover {
+  background-color: #4338ca;
+}
+
+.signin-buttons button:last-child {
+  background-color: red;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.signin-buttons button:last-child:hover {
+  background-color: rgba(255, 0, 0, 0.65);
+}
+
+.signin-buttons button:last-child span svg {
+  background-color: #fff;
+  border-radius: 50%;
+  font-size: 2rem;
+}
+
+.signin-buttons-separator {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.signin-buttons-separator p {
+  margin: 0 2rem;
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.signin-buttons-separator:after,
+.signin-buttons-separator:before {
+  content: "";
+  border-top: 1px solid #ddd;
+  flex: 1;
 }
 
 /***************************************************/
