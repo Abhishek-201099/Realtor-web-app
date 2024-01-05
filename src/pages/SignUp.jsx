@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -10,10 +12,27 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     console.log("signUp form data : ", data);
+    const { name, email, password } = data;
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      const user = userCredentials.user;
+      console.log("user : ", user);
+      reset();
+    } catch (error) {
+      console.log("Error : ", error.message);
+    }
   }
 
   return (
@@ -30,7 +49,7 @@ export default function SignUp() {
                 required: "Please enter your name",
               })}
             />
-            {errors?.name?.message && <p>errors?.name?.message</p>}
+            {errors?.name?.message && <p>{errors?.name?.message}</p>}
           </div>
           <div className="signin-input-field">
             <label htmlFor="email">Email</label>
@@ -42,7 +61,7 @@ export default function SignUp() {
                 required: "Please enter your email",
               })}
             />
-            {errors?.email?.message && <p>errors?.email?.message</p>}
+            {errors?.email?.message && <p>{errors?.email?.message}</p>}
           </div>
           <div className="signin-password-field">
             <label htmlFor="password">Password</label>
@@ -68,7 +87,7 @@ export default function SignUp() {
                 />
               )}
             </div>
-            {errors?.password?.message && <p>errors?.password?.message</p>}
+            {errors?.password?.message && <p>{errors?.password?.message}</p>}
           </div>
           <div className="signin-register">
             <p>
@@ -78,11 +97,11 @@ export default function SignUp() {
           </div>
 
           <div className="signin-buttons">
-            <button>Sign-up</button>
+            <button type="submit">Sign-up</button>
             <div className="signin-buttons-separator">
               <p>or</p>
             </div>
-            <button>
+            <button type="button">
               <span>
                 <FcGoogle />
               </span>

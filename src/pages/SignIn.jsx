@@ -30,7 +30,7 @@ export default function SignIn() {
                 required: "Please enter your email",
               })}
             />
-            {errors?.email?.message && <p>errors?.email?.message</p>}
+            {errors?.email?.message && <p>{errors?.email?.message}</p>}
           </div>
           <div className="signin-password-field">
             <label htmlFor="password">Password</label>
@@ -56,7 +56,7 @@ export default function SignIn() {
                 />
               )}
             </div>
-            {errors?.password?.message && <p>errors?.password?.message</p>}
+            {errors?.password?.message && <p>{errors?.password?.message}</p>}
           </div>
           <div className="signin-register">
             <p>
@@ -66,11 +66,11 @@ export default function SignIn() {
           </div>
 
           <div className="signin-buttons">
-            <button>Sign-in</button>
+            <button type="submit">Sign-in</button>
             <div className="signin-buttons-separator">
               <p>or</p>
             </div>
-            <button>
+            <button type="button">
               <span>
                 <FcGoogle />
               </span>

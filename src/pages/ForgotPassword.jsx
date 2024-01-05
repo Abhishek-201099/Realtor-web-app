@@ -27,7 +27,7 @@ export default function ForgotPassword() {
                 required: "Please enter your email",
               })}
             />
-            {errors?.email?.message && <p>errors?.email?.message</p>}
+            {errors?.email?.message && <p>{errors?.email?.messag}e</p>}
           </div>
           <div className="signin-register">
             <p>
@@ -37,11 +37,11 @@ export default function ForgotPassword() {
           </div>
 
           <div className="signin-buttons">
-            <button>Send reset email</button>
+            <button type="submit">Send reset email</button>
             <div className="signin-buttons-separator">
               <p>or</p>
             </div>
-            <button>
+            <button type="button">
               <span>
                 <FcGoogle />
               </span>
