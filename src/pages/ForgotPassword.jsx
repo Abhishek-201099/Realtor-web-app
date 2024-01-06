@@ -1,10 +1,9 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import toast from "react-hot-toast";
-import Loader from "../ui/Loader";
+import AuthForms from "../ui/AuthForms";
 
 export default function ForgotPassword() {
   const [isSendingResetEmail, setIsSendingResetEmail] = useState(false);
@@ -28,35 +27,12 @@ export default function ForgotPassword() {
   }
 
   return (
-    <section className="section-signin">
-      <div className="signin-container">
-        <form className="signin-form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="signin-input-field">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="example@mail.com"
-              {...register("email", {
-                required: "Please enter your email",
-              })}
-            />
-            {errors?.email?.message && <p>{errors?.email?.message}</p>}
-          </div>
-          <div className="signin-register">
-            <p>
-              Don&apos;t have an account ? <Link to="/sign-up">Register</Link>
-            </p>
-            <Link to="/sign-in">Sign-in instead</Link>
-          </div>
-
-          <div className="signin-buttons">
-            <button type="submit">
-              {isSendingResetEmail ? <Loader /> : "Send reset email"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
+    <AuthForms
+      onSubmit={handleSubmit(onSubmit)}
+      register={register}
+      errors={errors}
+      isLoading={isSendingResetEmail}
+      authFor="forgotPassword"
+    />
   );
 }
