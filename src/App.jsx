@@ -3,6 +3,8 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
@@ -53,5 +55,30 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 3000,
+          },
+          style: {
+            maxWidth: "700px",
+            fontSize: "16px",
+            padding: "16px 24px",
+            backgroundColor: `#fff`,
+            color: `#000`,
+            boxShadow: ` rgba(0, 0, 0, 0.24) 0px 3px 8px`,
+          },
+        }}
+      />
+    </>
+  );
 }

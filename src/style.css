@@ -195,6 +195,9 @@ body {
 
 .signin-buttons button:first-child {
   background-color: #4f46e5;
+
+  display: flex;
+  justify-content: center;
 }
 
 .signin-buttons button:first-child:hover {
@@ -237,6 +240,26 @@ body {
   content: "";
   border-top: 1px solid #ddd;
   flex: 1;
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
+/* LOADER */
+
+.loader {
+  width: 2rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid;
+  border-color: #fff #0000;
+  animation: l1 1s infinite;
+}
+
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
+  }
 }
 
 /***************************************************/

@@ -2,12 +2,24 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
+
+import Loader from "../ui/Loader";
+import { capitalizeEachWord, capitalizeFirstLetter } from "../helpers/helpers";
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false);
   const {
     register,
     handleSubmit,
@@ -16,8 +28,8 @@ export default function SignUp() {
   } = useForm();
 
   async function onSubmit(data) {
-    console.log("signUp form data : ", data);
     const { name, email, password } = data;
+    setIsSigningUp(true);
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -25,13 +37,48 @@ export default function SignUp() {
         password
       );
       updateProfile(auth.currentUser, {
-        displayName: name,
+        displayName: capitalizeEachWord(name),
       });
       const user = userCredentials.user;
-      console.log("user : ", user);
+      await setDoc(doc(db, "users", user.uid), {
+        name: capitalizeEachWord(name),
+        email,
+        timeStamp: serverTimestamp(),
+      });
       reset();
+      navigate("/");
+      toast.success(`Successfully signed up`);
     } catch (error) {
-      console.log("Error : ", error.message);
+      toast.error(
+        `${capitalizeFirstLetter(
+          error.code.split("/").at(1).split("-").join(" ")
+        )}`
+      );
+    } finally {
+      setIsSigningUp(false);
+    }
+  }
+
+  async function handleOAuthSignUp() {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // CHECK IF USER EXISTS
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        await setDoc(docRef, {
+          name: user.displayName,
+          email: user.email,
+          timeStamp: serverTimestamp(),
+        });
+      }
+      navigate("/");
+      toast.success(`Successfully signed up`);
+    } catch (error) {
+      console.log(error.code.split("/").at(1).split("-").join(" "));
     }
   }
 
@@ -59,6 +106,10 @@ export default function SignUp() {
               placeholder="example@mail.com"
               {...register("email", {
                 required: "Please enter your email",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Please enter a valid email address",
+                },
               })}
             />
             {errors?.email?.message && <p>{errors?.email?.message}</p>}
@@ -71,6 +122,10 @@ export default function SignUp() {
                 type={showPassword ? "text" : "password"}
                 {...register("password", {
                   required: "Please enter your password",
+                  minLength: {
+                    value: 8,
+                    message: "Password needs minimum of 8 characters",
+                  },
                 })}
               />
               {showPassword ? (
@@ -97,11 +152,13 @@ export default function SignUp() {
           </div>
 
           <div className="signin-buttons">
-            <button type="submit">Sign-up</button>
+            <button type="submit">
+              {isSigningUp ? <Loader /> : "Sign-up"}
+            </button>
             <div className="signin-buttons-separator">
               <p>or</p>
             </div>
-            <button type="button">
+            <button type="button" onClick={() => handleOAuthSignUp()}>
               <span>
                 <FcGoogle />
               </span>

@@ -1,16 +1,30 @@
+import { sendPasswordResetEmail } from "firebase/auth";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import toast from "react-hot-toast";
+import Loader from "../ui/Loader";
 
 export default function ForgotPassword() {
+  const [isSendingResetEmail, setIsSendingResetEmail] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  function onSubmit(data) {
-    console.log("forgotPassword form data : ", data);
+  async function onSubmit(data) {
+    const { email } = data;
+    setIsSendingResetEmail(true);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.success(`Email to reset the password has been sent`);
+    } catch (error) {
+      toast.error(`${error.code.split("/").at(1).split("-").join(" ")}`);
+    } finally {
+      setIsSendingResetEmail(false);
+    }
   }
 
   return (
@@ -27,7 +41,7 @@ export default function ForgotPassword() {
                 required: "Please enter your email",
               })}
             />
-            {errors?.email?.message && <p>{errors?.email?.messag}e</p>}
+            {errors?.email?.message && <p>{errors?.email?.message}</p>}
           </div>
           <div className="signin-register">
             <p>
@@ -37,15 +51,8 @@ export default function ForgotPassword() {
           </div>
 
           <div className="signin-buttons">
-            <button type="submit">Send reset email</button>
-            <div className="signin-buttons-separator">
-              <p>or</p>
-            </div>
-            <button type="button">
-              <span>
-                <FcGoogle />
-              </span>
-              <span>Continue with Google</span>
+            <button type="submit">
+              {isSendingResetEmail ? <Loader /> : "Send reset email"}
             </button>
           </div>
         </form>

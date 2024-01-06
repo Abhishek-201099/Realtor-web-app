@@ -1,19 +1,69 @@
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase";
+import toast from "react-hot-toast";
+import Loader from "../ui/Loader";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  function onSubmit(data) {
-    console.log("signin form data : ", data);
+  async function onSubmit(data) {
+    const { email, password } = data;
+    setIsSigningIn(true);
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userCredentials.user) {
+        toast.success("Successfully signed in");
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(`${error.code.split("/").at(1).split("-").join(" ")}`);
+    } finally {
+      setIsSigningIn(false);
+    }
+  }
+
+  async function handleOAuthSignUp() {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // CHECK IF USER EXISTS
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        await setDoc(docRef, {
+          name: user.displayName,
+          email: user.email,
+          timeStamp: serverTimestamp(),
+        });
+      }
+      navigate("/");
+      toast.success(`Successfully signed up`);
+    } catch (error) {
+      console.log(error.code.split("/").at(1).split("-").join(" "));
+    }
   }
 
   return (
@@ -66,11 +116,13 @@ export default function SignIn() {
           </div>
 
           <div className="signin-buttons">
-            <button type="submit">Sign-in</button>
+            <button type="submit">
+              {isSigningIn ? <Loader /> : "Sign-in"}
+            </button>
             <div className="signin-buttons-separator">
               <p>or</p>
             </div>
-            <button type="button">
+            <button type="button" onClick={() => handleOAuthSignUp()}>
               <span>
                 <FcGoogle />
               </span>
