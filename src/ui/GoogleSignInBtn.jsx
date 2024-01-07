@@ -5,7 +5,7 @@ import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-export default function GoogleSignInBtn() {
+export default function GoogleSignInBtn({ isLoading, authFor }) {
   const navigate = useNavigate();
   async function handleOAuthSignUp() {
     try {
@@ -24,13 +24,15 @@ export default function GoogleSignInBtn() {
         });
       }
       navigate("/");
-      toast.success(`Successfully signed up`);
+      toast.success(
+        `Successfully ${authFor === "sign-in" ? "signed in" : "signed up"}`
+      );
     } catch (error) {
       console.log(error.code.split("/").at(1).split("-").join(" "));
     }
   }
   return (
-    <button type="button" onClick={handleOAuthSignUp}>
+    <button type="button" onClick={handleOAuthSignUp} disabled={isLoading}>
       <span>
         <FcGoogle />
       </span>

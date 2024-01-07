@@ -5,6 +5,7 @@ import { auth } from "../firebase";
 import toast from "react-hot-toast";
 import AuthForms from "../ui/AuthForms";
 import { useNavigate } from "react-router-dom";
+import { capitalizeFirstLetter } from "../helpers/helpers";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -29,7 +30,11 @@ export default function SignIn() {
         navigate("/");
       }
     } catch (error) {
-      toast.error(`${error.code.split("/").at(1).split("-").join(" ")}`);
+      toast.error(
+        `${capitalizeFirstLetter(
+          error.code.split("/").at(1).split("-").join(" ")
+        )}`
+      );
     } finally {
       setIsSigningIn(false);
     }

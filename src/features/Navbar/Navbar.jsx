@@ -5,7 +5,11 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="nav-logo-container" onClick={() => navigate("/")}>
-        <img className="nav-logo" src="/logo.png" alt="realtor website logo" />
+        <img
+          className="nav-logo"
+          src="/logo-realtor.svg"
+          alt="realtor website logo"
+        />
       </div>
       <ul className="nav-list">
         <li className="nav-list-item">

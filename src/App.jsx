@@ -73,9 +73,9 @@ export default function App() {
             maxWidth: "700px",
             fontSize: "16px",
             padding: "16px 24px",
-            backgroundColor: `#fff`,
-            color: `#000`,
-            boxShadow: ` rgba(0, 0, 0, 0.24) 0px 3px 8px`,
+            backgroundColor: `var(--color-grey-50)`,
+            color: `var(--color-grey-600)`,
+            boxShadow: `var(--shadow-sm)`,
           },
         }}
       />

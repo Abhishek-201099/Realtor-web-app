@@ -22,16 +22,16 @@ export default function AuthForms({
       : "";
 
   return (
-    <section className="section-signin">
-      <div className="signin-container">
-        <form className="signin-form" onSubmit={onSubmit}>
+    <section className="section-auth">
+      <div className="auth-container">
+        <form className="auth-form" onSubmit={onSubmit}>
           {authFor === "sign-up" && (
-            <div className="signin-name-field">
+            <div className="auth-name-field">
               <label htmlFor="name">Name</label>
               <input
                 type="text"
                 id="name"
-                placeholder="e.g. Louis Armstrong"
+                disabled={isLoading}
                 {...register("name", {
                   required: "Please enter your name",
                 })}
@@ -39,12 +39,12 @@ export default function AuthForms({
               {errors?.name?.message && <p>{errors?.name?.message}</p>}
             </div>
           )}
-          <div className="signin-input-field">
+          <div className="auth-input-field">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
-              placeholder="example@mail.com"
+              disabled={isLoading}
               {...register("email", {
                 required: "Please enter your email",
                 pattern: {
@@ -56,12 +56,13 @@ export default function AuthForms({
             {errors?.email?.message && <p>{errors?.email?.message}</p>}
           </div>
           {authFor !== "forgotPassword" && (
-            <div className="signin-password-field">
+            <div className="auth-password-field">
               <label htmlFor="password">Password</label>
-              <div className="signin-passowrd-input-container">
+              <div className="auth-passowrd-input-container">
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
+                  disabled={isLoading}
                   {...register("password", {
                     required: "Please enter your password",
                     minLength: {
@@ -87,7 +88,7 @@ export default function AuthForms({
               {errors?.password?.message && <p>{errors?.password?.message}</p>}
             </div>
           )}
-          <div className="signin-register">
+          <div className="auth-register">
             {authFor === "sign-up" && (
               <p>
                 Have an account ? <Link to="/sign-in">Sign-in</Link>
@@ -110,16 +111,16 @@ export default function AuthForms({
             )}
           </div>
 
-          <div className="signin-buttons">
-            <button type="submit">
+          <div className="auth-buttons">
+            <button type="submit" disabled={isLoading}>
               {isLoading ? <Loader /> : submitBtnText}
             </button>
             {authFor !== "forgotPassword" && (
               <>
-                <div className="signin-buttons-separator">
+                <div className="auth-buttons-separator">
                   <p>or</p>
                 </div>
-                <GoogleSignInBtn />
+                <GoogleSignInBtn isLoading={isLoading} authFor={authFor} />
               </>
             )}
           </div>
