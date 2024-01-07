@@ -19,7 +19,7 @@ export default function Navbar() {
           <NavLink to="/offers">Offers</NavLink>
         </li>
         <li className="nav-list-item">
-          <NavLink to="/sign-in">SignIn</NavLink>
+          <NavLink to="/sign-in">Sign-in</NavLink>
         </li>
       </ul>
     </header>
