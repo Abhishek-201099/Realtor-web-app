@@ -40,6 +40,9 @@
   --color-indigo-700: #e0e7ff;
 
   --color-red-100: #fee2e2;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
 
@@ -210,6 +213,8 @@ main {
 /***************************************************/
 /***************************************************/
 /* SIGN-IN FORM */
+
+.section-profile,
 .section-auth {
   height: 100%;
 
@@ -218,6 +223,7 @@ main {
   align-items: center;
 }
 
+.profile-container,
 .auth-container {
   background-color: var(--color-grey-0);
   padding: 2rem;
@@ -226,12 +232,15 @@ main {
   border-radius: var(--border-radius-md);
 }
 
+.profile-form,
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 4rem;
 }
 
+.profile-email-field,
+.profile-name-field,
 .auth-name-field,
 .auth-password-field,
 .auth-input-field {
@@ -240,6 +249,8 @@ main {
   gap: 2rem;
 }
 
+.profile-email-field label,
+.profile-name-field label,
 .auth-name-field label,
 .auth-password-field label,
 .auth-input-field label {
@@ -247,6 +258,8 @@ main {
   color: var(--color-grey-600);
 }
 
+.profile-email-field input,
+.profile-name-field input,
 .auth-name-field input,
 .auth-password-field input,
 .auth-input-field input {
@@ -259,6 +272,8 @@ main {
   width: 100%;
 }
 
+.profile-email-field input:focus,
+.profile-name-field input:focus,
 .auth-name-field input:focus,
 .auth-password-field input:focus,
 .auth-input-field input:focus {
@@ -313,6 +328,7 @@ main {
   gap: 2rem;
 }
 
+.profile-submit-btn,
 .auth-buttons button {
   padding: 1.2rem 2rem;
   cursor: pointer;
@@ -324,6 +340,7 @@ main {
   font-weight: 500;
 }
 
+.profile-submit-btn,
 .auth-buttons button:first-child {
   background-color: var(--color-brand-600);
 
@@ -331,6 +348,7 @@ main {
   justify-content: center;
 }
 
+.profile-submit-btn:hover,
 .auth-buttons button:first-child:hover {
   background-color: var(--color-brand-700);
 }
@@ -375,6 +393,22 @@ main {
   flex: 1;
 }
 
+.form-error {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--color-red-500);
+  letter-spacing: 0.6px;
+}
+
+.form-input-error {
+  outline: 1px solid var(--color-red-500);
+  border: none !important;
+}
+
+.form-input-error:focus {
+  outline: 1px solid var(--color-red-500) !important;
+}
+
 /***************************************************/
 /***************************************************/
 /***************************************************/
@@ -398,3 +432,21 @@ main {
 /***************************************************/
 /***************************************************/
 /***************************************************/
+/* FULL PAGE LOADER */
+.fullpage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(0.2rem);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullpage .loader {
+  width: 10rem;
+  border-width: 1.5rem;
+}

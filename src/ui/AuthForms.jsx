@@ -32,11 +32,14 @@ export default function AuthForms({
                 type="text"
                 id="name"
                 disabled={isLoading}
+                className={`${errors?.name?.message ? "form-input-error" : ""}`}
                 {...register("name", {
                   required: "Please enter your name",
                 })}
               />
-              {errors?.name?.message && <p>{errors?.name?.message}</p>}
+              {errors?.name?.message && (
+                <p className="form-error">{errors?.name?.message}</p>
+              )}
             </div>
           )}
           <div className="auth-input-field">
@@ -45,6 +48,7 @@ export default function AuthForms({
               type="email"
               id="email"
               disabled={isLoading}
+              className={`${errors?.email?.message ? "form-input-error" : ""}`}
               {...register("email", {
                 required: "Please enter your email",
                 pattern: {
@@ -53,7 +57,9 @@ export default function AuthForms({
                 },
               })}
             />
-            {errors?.email?.message && <p>{errors?.email?.message}</p>}
+            {errors?.email?.message && (
+              <p className="form-error">{errors?.email?.message}</p>
+            )}
           </div>
           {authFor !== "forgotPassword" && (
             <div className="auth-password-field">
@@ -63,6 +69,9 @@ export default function AuthForms({
                   id="password"
                   type={showPassword ? "text" : "password"}
                   disabled={isLoading}
+                  className={`${
+                    errors?.password?.message ? "form-input-error" : ""
+                  }`}
                   {...register("password", {
                     required: "Please enter your password",
                     minLength: {
@@ -85,7 +94,9 @@ export default function AuthForms({
                   />
                 )}
               </div>
-              {errors?.password?.message && <p>{errors?.password?.message}</p>}
+              {errors?.password?.message && (
+                <p className="form-error">{errors?.password?.message}</p>
+              )}
             </div>
           )}
           <div className="auth-register">
