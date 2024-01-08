@@ -40,6 +40,8 @@
   --color-indigo-700: #e0e7ff;
 
   --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
   --color-red-400: #f87171;
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
@@ -198,6 +200,60 @@ img {
 
 .nav-list-item a.active {
   color: var(--color-grey-700);
+}
+
+.nav-account {
+  height: 2rem;
+}
+
+.nav-account svg {
+  width: 100%;
+  height: 100%;
+  color: var(--color-grey-400);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.nav-account svg:hover {
+  color: var(--color-grey-700);
+}
+
+.nav-context-menu-list {
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-context-menu-item {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 1.4rem 2rem;
+  color: var(--color-grey-500);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.nav-context-menu-item:last-child {
+  color: var(--color-red-500);
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-context-menu-item:last-child:hover {
+  color: var(--color-red-500);
+  background-color: var(--color-red-200);
+}
+
+.nav-context-menu-item:hover {
+  background-color: var(--color-grey-600);
+  color: var(--color-grey-0);
 }
 
 /***************************************************/
