@@ -74,9 +74,12 @@ export default function AuthForms({
                   }`}
                   {...register("password", {
                     required: "Please enter your password",
-                    minLength: {
-                      value: 8,
-                      message: "Password needs minimum of 8 characters",
+                    validate: (value) => {
+                      if (authFor !== "sign-in") {
+                        if (value.length < 8) {
+                          return "Password needs minimum of 8 characters";
+                        }
+                      }
                     },
                   })}
                 />

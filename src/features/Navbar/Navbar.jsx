@@ -80,7 +80,15 @@ export default function Navbar() {
                   >
                     Update Profile
                   </div>
-                  <div className="nav-context-menu-item">Rent or sell</div>
+                  <div
+                    className="nav-context-menu-item"
+                    onClick={() => {
+                      navigate("/create-listing");
+                      setIsOpenContextMenu(false);
+                    }}
+                  >
+                    Rent or sell
+                  </div>
                   <div
                     className="nav-context-menu-item"
                     onClick={() => {
