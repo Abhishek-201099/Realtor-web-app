@@ -2,8 +2,20 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsHouseAdd } from "react-icons/bs";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { auth, db } from "../firebase";
+import { v4 as uuidv4 } from "uuid";
+import toast from "react-hot-toast";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import Loader from "../ui/Loader";
 
 export default function CreateListing() {
+  const [isUploading, setIsUploading] = useState(false);
   const [isOffer, setIsOffer] = useState(false);
   const {
     register,
@@ -13,24 +25,64 @@ export default function CreateListing() {
     getValues,
   } = useForm();
 
+  function storeImages(image) {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage();
+      const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+          progress === 100 && console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  }
+
   async function onSubmit(data) {
-    console.log("data : ", data);
-    const {
-      sellOrRent,
-      name,
-      address,
-      description,
-      offer,
-      parkingSpot,
-      furnished,
-      listingImages,
-      beds,
-      baths,
-      regularPrice,
-      discountPrice,
-      lattitude,
-      longitude,
-    } = data;
+    setIsUploading(true);
+    const { offer, listingImages, lattitude, longitude } = data;
+    const geolocation = { lattitude, longitude };
+
+    const imgUrls = await Promise.all(
+      [...listingImages].map((image) => storeImages(image))
+    ).catch(() => {
+      toast.error(`There's an error in uploading the listing images`);
+      return;
+    });
+
+    const updatedData = {
+      ...data,
+      geolocation,
+      imgUrls,
+      timestamp: serverTimestamp(),
+    };
+
+    delete updatedData.listingImages;
+    offer === "no" && delete updatedData.discountPrice;
+    delete updatedData.lattitude;
+    delete updatedData.longitude;
+
+    try {
+      await addDoc(collection(db, "listings"), updatedData);
+      toast.success("Successfully created the new listing");
+    } catch (error) {
+      toast.error(`There was a problem in creating the listing`);
+    } finally {
+      setIsUploading(false);
+    }
 
     reset();
   }
@@ -51,6 +103,7 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <input
                   type="radio"
+                  disabled={isUploading}
                   className={`${
                     errors?.sellOrRent?.message ? "form-input-error" : ""
                   }`}
@@ -65,6 +118,7 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <input
                   type="radio"
+                  disabled={isUploading}
                   className={`${
                     errors?.sellOrRent?.message ? "form-input-error" : ""
                   }`}
@@ -87,6 +141,7 @@ export default function CreateListing() {
             <input
               type="text"
               id="name"
+              disabled={isUploading}
               className={`${errors?.name?.message ? "form-input-error" : ""}`}
               {...register("name", {
                 required: "Please enter your name",
@@ -102,26 +157,30 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <label htmlFor="bed">Beds</label>
                 <input
-                  type="text"
+                  type="number"
                   id="bed"
+                  disabled={isUploading}
                   className={`${
                     errors?.beds?.message ? "form-input-error" : ""
                   }`}
                   {...register("beds", {
                     required: "Please enter number of baths and beds",
+                    valueAsNumber: true,
                   })}
                 />
               </div>
               <div className="btn-grp-item">
                 <label htmlFor="bath">Baths</label>
                 <input
-                  type="text"
+                  type="number"
                   id="bath"
+                  disabled={isUploading}
                   className={`${
                     errors?.baths?.message ? "form-input-error" : ""
                   }`}
                   {...register("baths", {
                     required: "Please enter number of baths and beds",
+                    valueAsNumber: true,
                   })}
                 />
               </div>
@@ -139,6 +198,7 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <input
                   type="radio"
+                  disabled={isUploading}
                   className={`${
                     errors?.parkingSpot?.message ? "form-input-error" : ""
                   }`}
@@ -153,6 +213,7 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <input
                   type="radio"
+                  disabled={isUploading}
                   className={`${
                     errors?.parkingSpot?.message ? "form-input-error" : ""
                   }`}
@@ -176,6 +237,7 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <input
                   type="radio"
+                  disabled={isUploading}
                   className={`${
                     errors?.furnished?.message ? "form-input-error" : ""
                   }`}
@@ -189,6 +251,7 @@ export default function CreateListing() {
               </div>
               <div className="btn-grp-item">
                 <input
+                  disabled={isUploading}
                   type="radio"
                   className={`${
                     errors?.furnished?.message ? "form-input-error" : ""
@@ -213,6 +276,7 @@ export default function CreateListing() {
               id="address"
               cols="30"
               rows="10"
+              disabled={isUploading}
               className={`${
                 errors?.address?.message ? "form-input-error" : ""
               }`}
@@ -230,28 +294,34 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <label htmlFor="lattitude">Lattitude</label>
                 <input
-                  type="text"
+                  type="number"
                   id="lattitude"
+                  step="any"
+                  disabled={isUploading}
                   className={`${
                     errors?.lattitude?.message ? "form-input-error" : ""
                   }`}
                   {...register("lattitude", {
                     required:
                       "Please enter lattitude and longitude of the property",
+                    valueAsNumber: true,
                   })}
                 />
               </div>
               <div className="btn-grp-item">
                 <label htmlFor="longitude">Longitude</label>
                 <input
-                  type="text"
+                  type="number"
                   id="longitude"
+                  step="any"
+                  disabled={isUploading}
                   className={`${
                     errors?.longitude?.message ? "form-input-error" : ""
                   }`}
                   {...register("longitude", {
                     required:
                       "Please enter lattitude and longitude of the property",
+                    valueAsNumber: true,
                   })}
                 />
               </div>
@@ -269,6 +339,7 @@ export default function CreateListing() {
               id="description"
               cols="30"
               rows="10"
+              disabled={isUploading}
               className={`${
                 errors?.description?.message ? "form-input-error" : ""
               }`}
@@ -287,6 +358,7 @@ export default function CreateListing() {
               <div className="btn-grp-item">
                 <input
                   type="radio"
+                  disabled={isUploading}
                   className={`${
                     errors?.offer?.message ? "form-input-error" : ""
                   }`}
@@ -301,6 +373,7 @@ export default function CreateListing() {
               </div>
               <div className="btn-grp-item">
                 <input
+                  disabled={isUploading}
                   className={`${
                     errors?.offer?.message ? "form-input-error" : ""
                   }`}
@@ -323,13 +396,16 @@ export default function CreateListing() {
           <div className="createListing-field">
             <label htmlFor="regularPrice">Regular price</label>
             <input
-              type="text"
+              type="number"
               id="regularPrice"
+              step="any"
+              disabled={isUploading}
               className={`${
                 errors?.regularPrice?.message ? "form-input-error" : ""
               }`}
               {...register("regularPrice", {
                 required: "Please enter the price",
+                valueAsNumber: true,
               })}
             />
             {errors?.regularPrice?.message && (
@@ -341,13 +417,16 @@ export default function CreateListing() {
             <div className="createListing-field">
               <label htmlFor="discountPrice">Discount price</label>
               <input
-                type="text"
+                type="number"
                 id="discountPrice"
+                disabled={isUploading}
+                step="any"
                 className={`${
                   errors?.discountPrice?.message ? "form-input-error" : ""
                 }`}
                 {...register("discountPrice", {
                   required: "Please enter the price",
+                  valueAsNumber: true,
                   validate: (value) => {
                     if (value >= getValues().regularPrice)
                       return "Discount price cannot be greater or equal to regular price";
@@ -364,6 +443,7 @@ export default function CreateListing() {
             <label htmlFor="img">Listing images ( * 6 images )</label>
             <input
               type="file"
+              disabled={isUploading}
               className={`${
                 errors?.listingImages?.message ? "form-input-error" : ""
               }`}
@@ -382,11 +462,17 @@ export default function CreateListing() {
             )}
           </div>
 
-          <button type="submit">
-            <span>
-              <MdOutlineAddCircleOutline />
-            </span>
-            <span>Add new listing</span>
+          <button type="submit" disabled={isUploading}>
+            {isUploading ? (
+              <Loader />
+            ) : (
+              <>
+                <span>
+                  <MdOutlineAddCircleOutline />
+                </span>
+                <span>Add new listing</span>
+              </>
+            )}
           </button>
         </form>
       </div>
