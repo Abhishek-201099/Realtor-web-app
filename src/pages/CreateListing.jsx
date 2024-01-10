@@ -10,10 +10,28 @@ export default function CreateListing() {
     reset,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     console.log("data : ", data);
+    const {
+      sellOrRent,
+      name,
+      address,
+      description,
+      offer,
+      parkingSpot,
+      furnished,
+      listingImages,
+      beds,
+      baths,
+      regularPrice,
+      discountPrice,
+      lattitude,
+      longitude,
+    } = data;
+
     reset();
   }
 
@@ -208,6 +226,44 @@ export default function CreateListing() {
           </div>
 
           <div className="createListing-field">
+            <div className="field-btn-grp">
+              <div className="btn-grp-item">
+                <label htmlFor="lattitude">Lattitude</label>
+                <input
+                  type="text"
+                  id="lattitude"
+                  className={`${
+                    errors?.lattitude?.message ? "form-input-error" : ""
+                  }`}
+                  {...register("lattitude", {
+                    required:
+                      "Please enter lattitude and longitude of the property",
+                  })}
+                />
+              </div>
+              <div className="btn-grp-item">
+                <label htmlFor="longitude">Longitude</label>
+                <input
+                  type="text"
+                  id="longitude"
+                  className={`${
+                    errors?.longitude?.message ? "form-input-error" : ""
+                  }`}
+                  {...register("longitude", {
+                    required:
+                      "Please enter lattitude and longitude of the property",
+                  })}
+                />
+              </div>
+            </div>
+            {(errors?.longitude?.message || errors?.lattitude?.message) && (
+              <p className="form-error">
+                {errors?.longitude?.message || errors?.lattitude?.message}
+              </p>
+            )}
+          </div>
+
+          <div className="createListing-field">
             <label htmlFor="description">Description</label>
             <textarea
               id="description"
@@ -292,6 +348,10 @@ export default function CreateListing() {
                 }`}
                 {...register("discountPrice", {
                   required: "Please enter the price",
+                  validate: (value) => {
+                    if (value >= getValues().regularPrice)
+                      return "Discount price cannot be greater or equal to regular price";
+                  },
                 })}
               />
               {errors?.discountPrice?.message && (
