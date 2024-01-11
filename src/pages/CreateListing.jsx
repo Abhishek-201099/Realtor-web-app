@@ -13,8 +13,10 @@ import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import Loader from "../ui/Loader";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateListing() {
+  const navigate = useNavigate();
   const [isUploading, setIsUploading] = useState(false);
   const [isOffer, setIsOffer] = useState(false);
   const {
@@ -68,6 +70,7 @@ export default function CreateListing() {
       geolocation,
       imgUrls,
       timestamp: serverTimestamp(),
+      userRef: auth.currentUser.uid,
     };
 
     delete updatedData.listingImages;
@@ -76,15 +79,16 @@ export default function CreateListing() {
     delete updatedData.longitude;
 
     try {
-      await addDoc(collection(db, "listings"), updatedData);
+      const docRef = await addDoc(collection(db, "listings"), updatedData);
       toast.success("Successfully created the new listing");
+      // UPDATE THIS LATER
+      // navigate(`/category/${updatedData.sellOrRent}/${docRef.id}`);
+      reset();
     } catch (error) {
       toast.error(`There was a problem in creating the listing`);
     } finally {
       setIsUploading(false);
     }
-
-    reset();
   }
 
   return (

@@ -569,6 +569,110 @@ main {
 /***************************************************/
 /***************************************************/
 /***************************************************/
+/* MY LISTINGS PAGE */
+
+.section-myListing {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myListing-container {
+  width: 80%;
+  min-height: 95%;
+  padding: 2rem;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-grey-0);
+}
+
+.myListing-heading {
+  padding: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-grey-600);
+  border-radius: var(--border-radius-md);
+  word-spacing: 1rem;
+  background-color: var(--color-grey-50);
+}
+
+.myListing-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 2rem 0rem;
+}
+
+.myListing-list-item {
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-grey-50);
+  color: var(--color-grey-600);
+  overflow: hidden;
+  padding-bottom: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.myListing-item-address {
+  color: var(--color-grey-500);
+  padding: 0rem 1rem;
+
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.myListing-item-address span:last-child {
+  font-size: 1.4rem;
+  padding: 0.4rem 0rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.myListing-item-img {
+  height: 100%;
+}
+
+.myListing-item-name {
+  padding: 0.8rem 1rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.myListing-item-price {
+  padding: 0rem 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.myListing-beds-baths {
+  padding: 0rem 1rem;
+  font-size: 1.4rem;
+  color: var(--color-grey-500);
+  word-spacing: 0.4rem;
+
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.myListing-beds-baths p {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
 /* LOADER */
 
 .loader {

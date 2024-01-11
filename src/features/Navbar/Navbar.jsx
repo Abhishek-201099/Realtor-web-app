@@ -92,6 +92,15 @@ export default function Navbar() {
                   <div
                     className="nav-context-menu-item"
                     onClick={() => {
+                      navigate("/my-listings");
+                      setIsOpenContextMenu(false);
+                    }}
+                  >
+                    My listings
+                  </div>
+                  <div
+                    className="nav-context-menu-item"
+                    onClick={() => {
                       auth.signOut();
                       navigate("/");
                       setIsOpenContextMenu(false);

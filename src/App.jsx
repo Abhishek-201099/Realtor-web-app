@@ -15,6 +15,7 @@ import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import CreateListing from "./pages/CreateListing";
+import MyListings from "./pages/MyListings";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <CreateListing />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/my-listings",
+        element: (
+          <ProtectedRoute>
+            <MyListings />
           </ProtectedRoute>
         ),
       },
