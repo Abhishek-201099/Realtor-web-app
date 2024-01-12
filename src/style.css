@@ -223,6 +223,7 @@ img {
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-md);
   overflow: hidden;
+  z-index: 100;
 
   display: flex;
   flex-direction: column;
@@ -264,6 +265,18 @@ main {
   overflow-y: auto;
   background-color: var(--color-grey-50);
   flex: 1;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+}
+
+main::-webkit-scrollbar {
+  /* WebKit */
+  width: 5px;
+}
+
+main::-webkit-scrollbar-thumb {
+  background-color: var(--color-grey-300);
 }
 
 /***************************************************/
@@ -271,7 +284,6 @@ main {
 /***************************************************/
 /* SIGN-IN FORM */
 
-.section-createListing,
 .section-profile,
 .section-auth {
   height: 100%;
@@ -485,28 +497,22 @@ main {
 /* CREATE LISTING FORM */
 
 .createListing-container {
-  max-height: 95%;
   width: 80rem;
   padding: 4rem;
-  overflow: auto;
   background-color: var(--color-grey-0);
   border-radius: var(--border-radius-md);
 
   display: flex;
   flex-direction: column;
   gap: 4rem;
-
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;
 }
 
-.createListing-container::-webkit-scrollbar {
-  /* WebKit */
-  width: 5px;
-}
+.section-createListing {
+  padding: 2rem 0rem;
+  overflow: auto;
 
-.createListing-container::-webkit-scrollbar-thumb {
-  background-color: var(--color-grey-300);
+  display: flex;
+  justify-content: center;
 }
 
 .createListing-heading {
@@ -572,15 +578,14 @@ main {
 /* MY LISTINGS PAGE */
 
 .section-myListing {
-  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  overflow: auto;
+  padding: 2rem 0rem;
 }
 
 .myListing-container {
   width: 80%;
-  min-height: 95%;
   padding: 2rem;
   border-radius: var(--border-radius-md);
   background-color: var(--color-grey-0);
@@ -598,8 +603,8 @@ main {
 
 .myListing-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
   padding: 2rem 0rem;
 }
 
@@ -635,6 +640,11 @@ main {
 
 .myListing-item-img {
   height: 100%;
+  position: relative;
+}
+
+.myListing-item-img img {
+  height: 100%;
 }
 
 .myListing-item-name {
@@ -668,6 +678,155 @@ main {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.myListing-list-item:hover .listing-overlay {
+  visibility: visible;
+}
+
+.listing-overlay {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(0.6rem);
+  z-index: 2;
+  transition: all 0.1s ease-in-out;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.listing-overlay-btns {
+  background-color: var(--color-grey-200);
+  padding: 1rem;
+  font-size: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-grey-200);
+  transition: all 0.3s;
+}
+
+.listing-overlay-btns:hover {
+  background-color: var(--color-grey-300);
+}
+
+.myListing-empty {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8rem;
+}
+
+.myListing-empty p {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--color-grey-600);
+}
+
+.myListing-empty button {
+  background-color: var(--color-grey-0);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+  color: var(--color-grey-500);
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.myListing-empty button:hover {
+  color: var(--color-grey-600);
+}
+
+.myListing-empty button svg {
+  font-size: 2.4rem;
+}
+
+.myListing-item-time {
+  font-size: 1.2rem;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: var(--color-grey-600);
+  z-index: 1;
+  background-color: var(--color-grey-100);
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius-md);
+}
+
+.delete-listing-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(1rem);
+  z-index: 50;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-listing-container {
+  background-color: var(--color-grey-50);
+  width: 30%;
+  padding: 2rem 1rem;
+  border-radius: var(--border-radius-md);
+
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.delete-listing-container p {
+  font-size: 2rem;
+  color: var(--color-grey-600);
+  text-align: center;
+}
+
+.delete-listing-btns {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.delete-listing-btns button:first-child {
+  padding: 1.2rem 2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  background-color: var(--color-red-600);
+  color: var(--color-grey-600);
+  border: none;
+  transition: all 0.3s;
+}
+
+.delete-listing-btns button:first-child:hover {
+  background-color: var(--color-red-500);
+}
+
+.delete-listing-btns button:last-child {
+  padding: 1.2rem 2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  background-color: var(--color-grey-50);
+  color: var(--color-grey-600);
+  border: 1px solid var(--color-grey-600);
+  transition: all 0.3s;
+}
+
+.delete-listing-btns button:last-child:hover {
+  background-color: var(--color-grey-600);
+  color: var(--color-grey-50);
 }
 
 /***************************************************/

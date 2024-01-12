@@ -11,3 +11,7 @@ export function capitalizeEachWord(sentence) {
   );
   return capitalizedWords.join(" ");
 }
+
+export function getImageName(imgUrl) {
+  return imgUrl.substring(imgUrl.indexOf("/o/") + 3, imgUrl.lastIndexOf("?"));
+}

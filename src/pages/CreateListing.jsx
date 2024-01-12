@@ -81,8 +81,7 @@ export default function CreateListing() {
     try {
       const docRef = await addDoc(collection(db, "listings"), updatedData);
       toast.success("Successfully created the new listing");
-      // UPDATE THIS LATER
-      // navigate(`/category/${updatedData.sellOrRent}/${docRef.id}`);
+      navigate(`/category/${updatedData.sellOrRent}/${docRef.id}`);
       reset();
     } catch (error) {
       toast.error(`There was a problem in creating the listing`);

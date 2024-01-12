@@ -1,13 +1,28 @@
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { FaBed, FaBath } from "react-icons/fa";
 import Loader from "../ui/Loader";
+import toast from "react-hot-toast";
+import { deleteObject, getStorage, ref } from "firebase/storage";
+
+import MyListingItem from "../features/Listings/MyListingItem";
+import DeleteListing from "../features/Listings/DeleteListing";
+import UserEmptyListing from "../features/Listings/userEmptyListing";
+import { getImageName } from "../helpers/helpers";
 
 export default function MyListings() {
   const [userListings, setUserListings] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
+  const [isOpenDeleteListing, setIsOpenDeleteListing] = useState(false);
+  const [activeListing, setActiveListing] = useState(null);
 
   useEffect(function () {
     async function fetchUserListings() {
@@ -35,7 +50,28 @@ export default function MyListings() {
     fetchUserListings();
   }, []);
 
-  console.log("userListings : ", userListings);
+  async function handleDelete(userListing) {
+    try {
+      const storage = getStorage();
+
+      await deleteDoc(doc(db, "listings", userListing.id));
+      const updatedListing = userListings.filter(
+        (listing) => listing.id !== userListing.id
+      );
+      setUserListings([...updatedListing]);
+
+      userListing.data.imgUrls.forEach(async (imgUrl) => {
+        const imgToDelete = getImageName(imgUrl);
+        const fileRef = ref(storage, imgToDelete);
+        await deleteObject(fileRef);
+      });
+
+      toast.success(`Successfully deleted the listing`);
+      setIsOpenDeleteListing(false);
+    } catch (error) {
+      toast.error(`Failed to delete the listing`);
+    }
+  }
 
   if (isFetching)
     return (
@@ -44,6 +80,8 @@ export default function MyListings() {
       </div>
     );
 
+  if (!userListings.length) return <UserEmptyListing />;
+
   return (
     <section className="section-myListing">
       <div className="myListing-container">
@@ -51,46 +89,24 @@ export default function MyListings() {
         <div className="myListing-list">
           {userListings.map((userListing) => {
             return (
-              <div key={userListing.id} className="myListing-list-item">
-                <div className="myListing-item-img">
-                  <img
-                    src={userListing.data.imgUrls.at(0)}
-                    alt={userListing.name}
-                  />
-                </div>
-                <p className="myListing-item-address">
-                  <span>
-                    <FaMapMarkerAlt />
-                  </span>
-                  <span>{userListing.data.address}</span>
-                </p>
-                <p className="myListing-item-name">{userListing.data.name}</p>
-                <p className="myListing-item-price">
-                  &#8377;{" "}
-                  {userListing.data.offer === "yes"
-                    ? userListing.data.discountPrice
-                    : userListing.data.regularPrice}
-                  {userListing.data.offer === "yes" ? " / month" : ""}
-                </p>
-                <div className="myListing-beds-baths">
-                  <p>
-                    <span>
-                      <FaBed />
-                    </span>
-                    <span>{userListing.data.beds} bed</span>
-                  </p>
-                  <p>
-                    <span>
-                      <FaBath />
-                    </span>
-                    <span>{userListing.data.baths} bath</span>
-                  </p>
-                </div>
-              </div>
+              <MyListingItem
+                key={userListing.id}
+                userListing={userListing}
+                setIsOpenDeleteListing={setIsOpenDeleteListing}
+                setActiveListing={setActiveListing}
+              />
             );
           })}
         </div>
       </div>
+
+      {isOpenDeleteListing && (
+        <DeleteListing
+          handleDelete={handleDelete}
+          setIsOpenDeleteListing={setIsOpenDeleteListing}
+          activeListing={activeListing}
+        />
+      )}
     </section>
   );
 }
