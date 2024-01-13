@@ -18,7 +18,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getImageName } from "../helpers/helpers";
 
 export default function EditListing() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const params = useParams();
   const [isUploading, setIsUploading] = useState(false);
   const [isOffer, setIsOffer] = useState(false);
@@ -30,6 +30,16 @@ export default function EditListing() {
     getValues,
     setValue,
   } = useForm();
+
+  useEffect(
+    function () {
+      if (listingData && listingData?.userRef !== auth.currentUser.uid) {
+        navigate("/");
+        toast.error(`You're Not authorized to edit that listing`);
+      }
+    },
+    [listingData, navigate]
+  );
 
   useEffect(
     function () {
