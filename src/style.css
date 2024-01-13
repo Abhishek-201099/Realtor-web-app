@@ -604,6 +604,7 @@ main::-webkit-scrollbar-thumb {
 .myListing-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 50%;
   gap: 2rem;
   padding: 2rem 0rem;
 }
@@ -617,7 +618,7 @@ main::-webkit-scrollbar-thumb {
 
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  justify-content: space-between;
 }
 
 .myListing-item-address {
@@ -639,12 +640,13 @@ main::-webkit-scrollbar-thumb {
 }
 
 .myListing-item-img {
-  height: 100%;
+  height: 60%;
   position: relative;
 }
 
 .myListing-item-img img {
   height: 100%;
+  width: 100%;
 }
 
 .myListing-item-name {

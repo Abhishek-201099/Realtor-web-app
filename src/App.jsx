@@ -16,6 +16,7 @@ import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import CreateListing from "./pages/CreateListing";
 import MyListings from "./pages/MyListings";
+import EditListing from "./pages/EditListing";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <MyListings />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/edit-listing/:listingId",
+        element: (
+          <ProtectedRoute>
+            <EditListing />
           </ProtectedRoute>
         ),
       },
