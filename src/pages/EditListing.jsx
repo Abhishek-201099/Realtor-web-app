@@ -148,9 +148,12 @@ export default function EditListing() {
     delete updatedData.longitude;
 
     try {
-      await updateDoc(doc(db, "listings", params.listingId), updatedData);
+      const docRef = await updateDoc(
+        doc(db, "listings", params.listingId),
+        updatedData
+      );
       toast.success("Successfully updated the listing");
-      //   navigate(`/category/${updatedData.sellOrRent}/${docRef.id}`);
+      navigate(`/category/${updatedData.sellOrRent}/${docRef.id}`);
     } catch (error) {
       toast.error(`There was a problem in creating the listing`);
     } finally {
