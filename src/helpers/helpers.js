@@ -15,3 +15,11 @@ export function capitalizeEachWord(sentence) {
 export function getImageName(imgUrl) {
   return imgUrl.substring(imgUrl.indexOf("/o/") + 3, imgUrl.lastIndexOf("?"));
 }
+
+export function calculateDiscountPercentage(originalPrice, discountPrice) {
+  // Calculate the percentage discount
+  const discountAmount = originalPrice - discountPrice;
+  const discountPercentage = (discountAmount / originalPrice) * 100;
+
+  return Math.round(discountPercentage);
+}

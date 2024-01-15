@@ -1,7 +1,10 @@
 import { FaBed, FaBath, FaMapMarkerAlt } from "react-icons/fa";
 import { LuParkingCircle, LuParkingCircleOff } from "react-icons/lu";
 import { TbArmchair, TbArmchairOff } from "react-icons/tb";
-import { capitalizeEachWord } from "../../helpers/helpers";
+import {
+  calculateDiscountPercentage,
+  capitalizeEachWord,
+} from "../../helpers/helpers";
 
 export default function ListingDetail({ listingData }) {
   return (
@@ -13,13 +16,30 @@ export default function ListingDetail({ listingData }) {
         </span>
         <span>{listingData?.address}</span>
       </p>
-      <p className="listing-price">
-        &#8377;{" "}
-        {listingData?.offer === "yes"
-          ? listingData?.discountPrice?.toLocaleString("en-IN")
-          : listingData?.regularPrice?.toLocaleString("en-IN")}
-        {listingData?.offer === "yes" ? "/ month" : ""}
-      </p>
+      <div className="listing-price-container">
+        <p className="listing-price">
+          &#8377;{" "}
+          {listingData?.offer === "yes"
+            ? listingData?.discountPrice?.toLocaleString("en-IN")
+            : listingData?.regularPrice?.toLocaleString("en-IN")}
+          {listingData?.offer === "yes" ? "/ month" : ""}
+        </p>
+        {listingData?.offer === "yes" && (
+          <>
+            <p className="listing-original-price">
+              &#8377; {listingData?.regularPrice.toLocaleString("en-IN")}
+            </p>
+            <p className="listing-discount-percentage">
+              {calculateDiscountPercentage(
+                listingData?.regularPrice,
+                listingData?.discountPrice
+              )}
+              % Off
+            </p>
+          </>
+        )}
+      </div>
+
       <p className="listing-description">{listingData?.description}</p>
       <div className="listing-amenities">
         <p className="listing-amenities-item">

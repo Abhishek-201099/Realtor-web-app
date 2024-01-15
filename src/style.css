@@ -879,11 +879,30 @@ main::-webkit-scrollbar-thumb {
   color: var(--color-grey-400);
 }
 
+.listing-price-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 .listing-price {
   color: var(--color-grey-600);
   font-weight: 700;
   letter-spacing: 1px;
   font-size: 2.4rem;
+}
+
+.listing-original-price {
+  text-decoration: line-through;
+  font-size: 2rem;
+  color: var(--color-grey-400);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.listing-discount-percentage {
+  color: var(--color-grey-600);
+  letter-spacing: 1px;
 }
 
 .listing-description {
