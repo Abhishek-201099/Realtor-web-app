@@ -1,5 +1,7 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaLink } from "react-icons/fa6";
 
 export default function ImageSlider({ imgUrls }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,6 +26,15 @@ export default function ImageSlider({ imgUrls }) {
         </div>
         <div className="slider-right" onClick={handleRightClick}>
           <FaChevronRight />
+        </div>
+        <div
+          className="slider-copy"
+          onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+            toast.success(`Link copied`);
+          }}
+        >
+          <FaLink />
         </div>
         <div
           className={`slider-slides`}

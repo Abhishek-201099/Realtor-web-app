@@ -944,6 +944,26 @@ main::-webkit-scrollbar-thumb {
   right: -2rem;
 }
 
+.slider-copy {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--color-grey-600);
+  background-color: var(--color-grey-100);
+  border-radius: 50%;
+  padding: 1rem;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-copy:hover {
+  background-color: var(--color-grey-200);
+}
+
 /***************************************************/
 /***************************************************/
 /***************************************************/
