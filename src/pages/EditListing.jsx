@@ -120,11 +120,16 @@ export default function EditListing() {
 
     if (listingImages.length) {
       const storage = getStorage();
-      listingData?.imgUrls.forEach(async (imgUrl) => {
-        const imgToDelete = getImageName(imgUrl);
-        const fileRef = ref(storage, imgToDelete);
-        await deleteObject(fileRef);
-      });
+      try {
+        listingData?.imgUrls.forEach(async (imgUrl) => {
+          const imgToDelete = getImageName(imgUrl);
+          const fileRef = ref(storage, imgToDelete);
+          console.log("FileRef : ", fileRef);
+          await deleteObject(fileRef);
+        });
+      } catch (error) {
+        console.log("Error in deleting already existing images : ", error);
+      }
 
       imgUrls = await Promise.all(
         [...listingImages].map((image) => storeImages(image))
@@ -148,14 +153,11 @@ export default function EditListing() {
     delete updatedData.longitude;
 
     try {
-      const docRef = await updateDoc(
-        doc(db, "listings", params.listingId),
-        updatedData
-      );
+      await updateDoc(doc(db, "listings", params.listingId), updatedData);
       toast.success("Successfully updated the listing");
-      navigate(`/category/${updatedData.sellOrRent}/${docRef.id}`);
+      navigate(`/category/${updatedData.sellOrRent}/${params.listingId}`);
     } catch (error) {
-      toast.error(`There was a problem in creating the listing`);
+      toast.error(`There was a problem in updating the listing`);
     } finally {
       setIsUploading(false);
     }
