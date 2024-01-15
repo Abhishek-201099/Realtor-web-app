@@ -846,7 +846,7 @@ main::-webkit-scrollbar-thumb {
   width: 100%;
 
   display: flex;
-  gap: 1rem;
+  gap: 4rem;
 }
 
 .listing-imgs {
@@ -856,6 +856,56 @@ main::-webkit-scrollbar-thumb {
 
 .listing-details {
   flex: 1;
+  padding: 2rem 4rem;
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-md);
+
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.listing-name {
+  font-size: 3.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-grey-600);
+}
+
+.listing-address {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-grey-400);
+}
+
+.listing-price {
+  color: var(--color-grey-600);
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 2.4rem;
+}
+
+.listing-description {
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: var(--color-grey-500);
+}
+
+.listing-amenities {
+  color: var(--color-grey-500);
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.listing-amenities-item {
+  word-spacing: 0.4rem;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 /***************************************************/
