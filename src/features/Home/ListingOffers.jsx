@@ -10,8 +10,10 @@ import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import Loader from "../../ui/Loader";
 import MyListingItem from "../Listings/MyListingItem";
+import { useNavigate } from "react-router-dom";
 
 export default function ListingOffers() {
+  const navigate = useNavigate();
   const [offerListings, setOfferListings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,7 +55,9 @@ export default function ListingOffers() {
   return (
     <div className="home-offers-container">
       <h2 className="offers-heading">Recent offers</h2>
-      <p className="offers-show-more">Show more offers</p>
+      <p className="offers-show-more" onClick={() => navigate("/offers")}>
+        Show more offers
+      </p>
       <div className="offers-list">
         {offerListings?.map((listing) => (
           <MyListingItem key={listing.id} isHome={true} userListing={listing} />
