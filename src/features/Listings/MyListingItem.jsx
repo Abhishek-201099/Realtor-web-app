@@ -11,8 +11,14 @@ export default function MyListingItem({
 }) {
   const navigate = useNavigate();
 
+  function handleOnClick() {
+    if (isHome) {
+      navigate(`/category/${userListing?.data?.sellOrRent}/${userListing?.id}`);
+    }
+  }
+
   return (
-    <div className="myListing-list-item">
+    <div className="myListing-list-item" onClick={handleOnClick}>
       <div className="myListing-item-img">
         <div className="myListing-item-time">
           <Moment fromNow>{userListing?.data?.timestamp?.toDate()}</Moment>

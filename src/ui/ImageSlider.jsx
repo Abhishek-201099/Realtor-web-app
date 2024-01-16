@@ -2,8 +2,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaLink } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 export default function ImageSlider({ imgUrls, isHome = false, listings }) {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const currentListing = listings?.find(
@@ -20,6 +22,14 @@ export default function ImageSlider({ imgUrls, isHome = false, listings }) {
     const nextIndex =
       currentIndex === imgUrls.length - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(nextIndex);
+  }
+
+  function handleOnClick(e) {
+    if (isHome) {
+      navigate(
+        `/category/${currentListing?.data?.sellOrRent}/${currentListing?.id}`
+      );
+    }
   }
 
   return (
@@ -58,6 +68,7 @@ export default function ImageSlider({ imgUrls, isHome = false, listings }) {
         )}
         <div
           className={`slider-slides`}
+          onClick={handleOnClick}
           style={{
             backgroundImage: `url(${imgUrls?.[currentIndex]})`,
           }}
