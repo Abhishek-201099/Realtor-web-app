@@ -1218,6 +1218,54 @@ main::-webkit-scrollbar-thumb {
 /***************************************************/
 /***************************************************/
 /***************************************************/
+/* OFFERS PAGE */
+
+.section-offers {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  padding-bottom: 4rem;
+}
+
+.offer-listing-heading {
+  font-size: 2.4rem;
+  color: var(--color-grey-600);
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-md);
+  padding: 2rem 1rem;
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.offer-fetchmore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.offer-fetchmore button {
+  margin-top: 4rem;
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+  color: var(--color-grey-600);
+  background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s;
+  border: none;
+}
+
+.offer-fetchmore button:hover {
+  background-color: var(--color-grey-100);
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
 /* LOADER */
 
 .loader {
