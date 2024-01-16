@@ -1037,6 +1037,59 @@ main::-webkit-scrollbar-thumb {
 /***************************************************/
 /***************************************************/
 /***************************************************/
+/* HOME */
+
+.section-home {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  padding-bottom: 4rem;
+}
+
+.home-image-slider {
+  height: 40rem;
+}
+
+.home-offers-container {
+  margin-top: 4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.offers-heading {
+  color: var(--color-grey-600);
+  font-weight: 600;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.offers-show-more {
+  font-size: 1.4rem;
+  text-decoration: underline;
+  color: var(--color-grey-400);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.offers-show-more:hover {
+  color: var(--color-grey-500);
+}
+
+.offers-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.offers-list .myListing-list-item {
+  background-color: var(--color-grey-0);
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
 /* IMAGE SLIDER */
 .slider-container {
   height: 100%;
@@ -1118,6 +1171,28 @@ main::-webkit-scrollbar-thumb {
 
 .slider-right {
   right: -2rem;
+}
+
+.slider-listing-name {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.4rem;
+  background-color: var(--color-grey-100);
+  color: var(--color-grey-600);
+  border-bottom-right-radius: 50rem;
+  padding: 1rem 2rem;
+}
+
+.slider-listing-price {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.4rem;
+  background-color: var(--color-grey-100);
+  color: var(--color-grey-600);
+  border-top-left-radius: 50rem;
+  padding: 1rem 2rem;
 }
 
 .slider-copy {

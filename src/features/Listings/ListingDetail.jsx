@@ -22,7 +22,7 @@ export default function ListingDetail({ listingData }) {
           {listingData?.offer === "yes"
             ? listingData?.discountPrice?.toLocaleString("en-IN")
             : listingData?.regularPrice?.toLocaleString("en-IN")}
-          {listingData?.offer === "yes" ? "/ month" : ""}
+          {listingData?.sellOrRent === "rent" ? "/ month" : ""}
         </p>
         {listingData?.offer === "yes" && (
           <>

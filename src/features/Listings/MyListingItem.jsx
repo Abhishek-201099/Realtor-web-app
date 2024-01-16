@@ -7,6 +7,7 @@ export default function MyListingItem({
   userListing,
   setIsOpenDeleteListing,
   setActiveListing,
+  isHome = false,
 }) {
   const navigate = useNavigate();
 
@@ -14,63 +15,68 @@ export default function MyListingItem({
     <div className="myListing-list-item">
       <div className="myListing-item-img">
         <div className="myListing-item-time">
-          <Moment fromNow>{userListing.data.timestamp?.toDate()}</Moment>
+          <Moment fromNow>{userListing?.data?.timestamp?.toDate()}</Moment>
         </div>
-        <img src={userListing.data.imgUrls.at(0)} alt={userListing.name} />
-        <div className="listing-overlay">
-          <button
-            className="listing-overlay-btns"
-            onClick={() =>
-              navigate(
-                `/category/${userListing.data.sellOrRent}/${userListing.id}`
-              )
-            }
-          >
-            <FaEye />
-          </button>
-          <button
-            className="listing-overlay-btns"
-            onClick={() => navigate(`/edit-listing/${userListing.id}`)}
-          >
-            <MdEdit />
-          </button>
-          <button
-            className="listing-overlay-btns"
-            onClick={() => {
-              setIsOpenDeleteListing(true);
-              setActiveListing(userListing);
-            }}
-          >
-            <MdDelete />
-          </button>
-        </div>
+        <img
+          src={userListing?.data?.imgUrls.at(0)}
+          alt={userListing?.data?.name}
+        />
+        {!isHome && (
+          <div className="listing-overlay">
+            <button
+              className="listing-overlay-btns"
+              onClick={() =>
+                navigate(
+                  `/category/${userListing?.data?.sellOrRent}/${userListing?.id}`
+                )
+              }
+            >
+              <FaEye />
+            </button>
+            <button
+              className="listing-overlay-btns"
+              onClick={() => navigate(`/edit-listing/${userListing?.id}`)}
+            >
+              <MdEdit />
+            </button>
+            <button
+              className="listing-overlay-btns"
+              onClick={() => {
+                setIsOpenDeleteListing(true);
+                setActiveListing(userListing);
+              }}
+            >
+              <MdDelete />
+            </button>
+          </div>
+        )}
       </div>
       <p className="myListing-item-address">
         <span>
           <FaMapMarkerAlt />
         </span>
-        <span>{userListing.data.address}</span>
+        <span>{userListing?.data?.address}</span>
       </p>
-      <p className="myListing-item-name">{userListing.data.name}</p>
+      <p className="myListing-item-name">{userListing?.data?.name}</p>
       <p className="myListing-item-price">
         &#8377;{" "}
-        {userListing.data.offer === "yes"
-          ? userListing.data.discountPrice.toLocaleString("en-IN")
-          : userListing.data.regularPrice.toLocaleString("en-IN")}
-        {userListing.data.sellOrRent === "rent" ? " / month" : ""}
+        {userListing?.data?.offer === "yes"
+          ? userListing?.data?.discountPrice.toLocaleString("en-IN")
+          : userListing?.data?.regularPrice.toLocaleString("en-IN")}
+        {userListing?.data?.sellOrRent === "rent" ? " / month" : ""}
       </p>
       <div className="myListing-beds-baths">
         <p>
           <span>
             <FaBed />
           </span>
-          <span>{userListing.data.beds} bed</span>
+          <span>{userListing?.data?.beds} bed</span>
         </p>
         <p>
           <span>
             <FaBath />
           </span>
-          <span>{userListing.data.baths} bath</span>
+          <span>{userListing?.data?.baths} bath</span>
         </p>
       </div>
     </div>

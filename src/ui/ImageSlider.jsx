@@ -3,8 +3,12 @@ import toast from "react-hot-toast";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaLink } from "react-icons/fa6";
 
-export default function ImageSlider({ imgUrls }) {
+export default function ImageSlider({ imgUrls, isHome = false, listings }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const currentListing = listings?.find(
+    (listing) => listing?.data?.imgUrls[0] === imgUrls[currentIndex]
+  );
 
   function handleLeftClick() {
     const nextIndex =
@@ -27,15 +31,31 @@ export default function ImageSlider({ imgUrls }) {
         <div className="slider-right" onClick={handleRightClick}>
           <FaChevronRight />
         </div>
-        <div
-          className="slider-copy"
-          onClick={() => {
-            navigator.clipboard.writeText(window.location.href);
-            toast.success(`Link copied`);
-          }}
-        >
-          <FaLink />
-        </div>
+        {isHome && (
+          <div className="slider-listing-price">
+            &#8377;{" "}
+            {currentListing?.data?.offer === "yes"
+              ? currentListing?.data?.discountPrice.toLocaleString("en-IN")
+              : currentListing?.data?.regularPrice.toLocaleString("en-IN")}
+            {currentListing?.data?.sellOrRent === "rent" ? " / month" : ""}
+          </div>
+        )}
+        {isHome && (
+          <div className="slider-listing-name">
+            {currentListing?.data?.name}
+          </div>
+        )}
+        {!isHome && (
+          <div
+            className="slider-copy"
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              toast.success(`Link copied`);
+            }}
+          >
+            <FaLink />
+          </div>
+        )}
         <div
           className={`slider-slides`}
           style={{
@@ -43,22 +63,24 @@ export default function ImageSlider({ imgUrls }) {
           }}
         ></div>
       </div>
-      <div className="slider-navigation">
-        {imgUrls?.map((imgUrl, index) => {
-          return (
-            <div
-              className={`slider-navigation-item ${
-                index === currentIndex ? "active" : ""
-              }`}
-              key={index}
-              style={{ backgroundImage: `url(${imgUrl})` }}
-              onClick={() => {
-                setCurrentIndex(index);
-              }}
-            ></div>
-          );
-        })}
-      </div>
+      {!isHome && (
+        <div className="slider-navigation">
+          {imgUrls?.map((imgUrl, index) => {
+            return (
+              <div
+                className={`slider-navigation-item ${
+                  index === currentIndex ? "active" : ""
+                }`}
+                key={index}
+                style={{ backgroundImage: `url(${imgUrl})` }}
+                onClick={() => {
+                  setCurrentIndex(index);
+                }}
+              ></div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
