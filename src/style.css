@@ -160,7 +160,7 @@ img {
 
 .navbar {
   width: 80%;
-  padding: 1rem 0rem;
+  padding: 2rem 0rem;
   margin: 0 auto;
   background-color: var(--color-grey-0);
 
@@ -170,12 +170,21 @@ img {
 }
 
 .nav-logo-container {
-  width: 20%;
   cursor: pointer;
 }
 
+.nav-hamburger {
+  display: none;
+  font-size: 3rem;
+  color: var(--color-grey-600);
+}
+
 .nav-logo {
-  height: 4rem;
+  font-size: 2.4rem;
+  color: var(--color-grey-600);
+  font-weight: 600;
+  display: flex;
+  gap: 1rem;
 }
 
 .nav-list {
@@ -255,6 +264,50 @@ img {
 .nav-context-menu-item:hover {
   background-color: var(--color-grey-600);
   color: var(--color-grey-0);
+}
+
+.hamburger-menu-container {
+  width: 30rem;
+  padding: 1rem;
+  border-radius: var(--border-radius-lg);
+  background-color: var(--color-grey-0);
+  color: var(--color-grey-600);
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.hamburger-menu-close {
+  position: fixed;
+  top: 1rem;
+  right: 2rem;
+  color: var(--color-grey-600);
+  font-size: 4.5rem;
+}
+
+.hamburger-item {
+  font-size: 2rem;
+  padding: 3rem 1rem;
+  word-spacing: 4px;
+  font-weight: 600;
+}
+
+.hamburger-item:last-child {
+  color: var(--color-red-500);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hamburger-item-signin {
+  color: var(--color-grey-600) !important;
+}
+
+.hamburger-item:not(:last-child) {
+  border-bottom: 1px solid var(--color-grey-100);
 }
 
 /***************************************************/
@@ -1487,6 +1540,19 @@ main::-webkit-scrollbar-thumb {
 
   .delete-listing-container {
     width: 75%;
+  }
+
+  .navbar {
+    justify-content: space-between;
+    width: 90%;
+  }
+
+  .nav-list {
+    display: none;
+  }
+
+  .nav-hamburger {
+    display: block;
   }
 }
 

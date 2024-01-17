@@ -24,7 +24,7 @@ export default function ImageSlider({ imgUrls, isHome = false, listings }) {
     setCurrentIndex(nextIndex);
   }
 
-  function handleOnClick(e) {
+  function handleOnClick() {
     if (isHome) {
       navigate(
         `/category/${currentListing?.data?.sellOrRent}/${currentListing?.id}`
