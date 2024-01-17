@@ -1,7 +1,10 @@
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
 export default function ListingMap({ listingData }) {
+  L.Icon.Default.imagePath = "/";
+
   return (
     <div className="listing-map">
       <MapContainer
