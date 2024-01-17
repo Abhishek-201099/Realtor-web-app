@@ -288,16 +288,17 @@ main::-webkit-scrollbar-thumb {
 .section-auth {
   height: 100%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 .profile-container,
 .auth-container {
+  margin: 0 auto;
+  margin-top: 2rem;
   background-color: var(--color-grey-0);
   padding: 2rem;
-  max-height: 100rem;
   width: 50rem;
   border-radius: var(--border-radius-md);
 }
@@ -346,6 +347,10 @@ main::-webkit-scrollbar-thumb {
   border-radius: var(--border-radius-md);
   font-size: 1.8rem;
   width: 100%;
+}
+
+.createListing-field input[type="radio"] {
+  width: unset;
 }
 
 .createListing-field textarea:focus,
@@ -663,6 +668,7 @@ main::-webkit-scrollbar-thumb {
   padding: 0rem 1rem;
   font-size: 2rem;
   font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 .myListing-beds-baths {
@@ -694,6 +700,7 @@ main::-webkit-scrollbar-thumb {
   right: 0;
   bottom: 0;
   backdrop-filter: blur(0.6rem);
+  -webkit-backdrop-filter: blur(0.6rem);
   z-index: 2;
   transition: all 0.1s ease-in-out;
 
@@ -772,6 +779,7 @@ main::-webkit-scrollbar-thumb {
   right: 0;
   bottom: 0;
   backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
   z-index: 50;
 
   display: flex;
@@ -781,7 +789,7 @@ main::-webkit-scrollbar-thumb {
 
 .delete-listing-container {
   background-color: var(--color-grey-50);
-  width: 30%;
+  width: 40%;
   padding: 2rem 1rem;
   border-radius: var(--border-radius-md);
 
@@ -791,6 +799,7 @@ main::-webkit-scrollbar-thumb {
 }
 
 .delete-listing-container p {
+  line-height: 1.6;
   font-size: 2rem;
   color: var(--color-grey-600);
   text-align: center;
@@ -1071,6 +1080,7 @@ main::-webkit-scrollbar-thumb {
   color: var(--color-grey-400);
   cursor: pointer;
   transition: all 0.3s;
+  margin-bottom: 1rem;
 }
 
 .offers-show-more:hover {
@@ -1303,4 +1313,275 @@ main::-webkit-scrollbar-thumb {
 .fullpage .loader {
   width: 10rem;
   border-width: 1.5rem;
+}
+
+/***************************************************/
+/***************************************************/
+/***************************************************/
+/* RESPONSIVE */
+
+/* 2xl */
+@media (max-width: 1536px) {
+}
+
+/* xl */
+@media (max-width: 1280px) {
+  .myListing-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .section-home {
+    width: 90%;
+  }
+
+  .section-listing {
+    width: 90%;
+  }
+}
+
+/* lg */
+@media (max-width: 1024px) {
+  .myListing-container {
+    width: 90%;
+  }
+
+  .offers-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .offers-list .myListing-list-item {
+    height: 50rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-item-address span:last-child {
+    font-size: 1.6rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-item-name {
+    font-size: 2rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-item-price {
+    font-size: 2.4rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-beds-baths {
+    font-size: 1.6rem;
+  }
+
+  .offer-listing-heading {
+    font-size: 2rem;
+  }
+
+  .delete-listing-container {
+    width: 50%;
+  }
+
+  .section-listing {
+    width: 95%;
+  }
+
+  .listing-price {
+    font-size: 2rem;
+  }
+
+  .listing-original-price {
+    font-size: 1.6rem;
+  }
+}
+
+/* md */
+@media (max-width: 768px) {
+  .myListing-list {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 30%;
+  }
+
+  .myListing-container {
+    width: 95%;
+  }
+
+  .offers-list {
+    gap: 2rem;
+  }
+
+  .section-home {
+    width: 95%;
+  }
+
+  .offers-list .myListing-list-item {
+    height: 45rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-item-address span:last-child {
+    font-size: 1.4rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-item-name {
+    font-size: 1.8rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-item-price {
+    font-size: 2rem;
+  }
+
+  .offers-list .myListing-list-item .myListing-beds-baths {
+    font-size: 1.4rem;
+  }
+
+  .createListing-container {
+    width: 65rem;
+  }
+
+  .delete-listing-container {
+    width: 60%;
+  }
+
+  .listing-info {
+    flex-direction: column;
+  }
+
+  .listing-imgs {
+    flex: none;
+  }
+
+  .listing-details {
+    flex: none;
+  }
+}
+
+/* sm */
+@media (max-width: 640px) {
+  .myListing-heading {
+    font-size: 2rem;
+  }
+
+  .myListing-list {
+    grid-template-rows: 35%;
+  }
+
+  .myListing-item-address {
+    font-size: 1.2rem;
+  }
+
+  .myListing-item-name {
+    font-size: 1.6rem;
+  }
+
+  .myListing-item-price {
+    font-size: 1.8rem;
+  }
+
+  .offers-list .myListing-list-item {
+    height: 40rem;
+  }
+
+  .section-offers {
+    width: 90%;
+  }
+
+  .createListing-container {
+    width: 55rem;
+  }
+
+  .delete-listing-container {
+    width: 75%;
+  }
+}
+
+/* xs */
+@media (max-width: 475px) {
+  .myListing-container {
+    width: 90%;
+  }
+
+  .myListing-list {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 20%;
+  }
+
+  .myListing-heading {
+    font-size: 1.8rem;
+  }
+
+  .offers-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .slider-left,
+  .slider-right {
+    font-size: 2rem;
+  }
+
+  .slider-left {
+    left: -1.6rem;
+  }
+
+  .slider-right {
+    right: -1.6rem;
+  }
+
+  .profile-container,
+  .auth-container {
+    width: 35rem;
+  }
+
+  .auth-register p,
+  .auth-register a {
+    font-size: 1.2rem;
+  }
+
+  .auth-register p {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .auth-register p a {
+    margin-left: 0;
+  }
+
+  .auth-form {
+    gap: 3rem;
+  }
+
+  .myListing-empty p {
+    font-size: 2rem;
+  }
+
+  .createListing-container {
+    padding: 3rem;
+  }
+
+  .field-btn-grp {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .delete-listing-container {
+    width: 90%;
+  }
+
+  .delete-listing-container p {
+    font-size: 1.8rem;
+  }
+
+  .listing-name {
+    font-size: 2.4rem;
+  }
+
+  .listing-price {
+    font-size: 2rem;
+  }
+
+  .listing-address {
+    line-height: 1.6;
+  }
+
+  .listing-price-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4rem;
+  }
 }
