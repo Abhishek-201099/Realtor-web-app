@@ -2,13 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { IoMdClose } from "react-icons/io";
 import { PiSignOutBold } from "react-icons/pi";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 export default function NavHamburger({ setIsOpenHamburger, isAuthenticated }) {
   const navigate = useNavigate();
+  const ref = useOutsideClick(() => setIsOpenHamburger(false), true);
 
   return (
     <div className="delete-listing-overlay">
-      <div className="hamburger-menu-container">
+      <div ref={ref} className="hamburger-menu-container">
         <div
           className="hamburger-menu-close"
           onClick={() => {
