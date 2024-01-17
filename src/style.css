@@ -267,7 +267,7 @@ img {
 }
 
 .hamburger-menu-container {
-  width: 30rem;
+  width: 25rem;
   padding: 1rem;
   border-radius: var(--border-radius-lg);
   background-color: var(--color-grey-0);
